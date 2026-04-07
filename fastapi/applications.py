@@ -1013,15 +1013,35 @@ class FastAPI(Starlette):
             websocket_request_validation_exception_handler,  # type: ignore[arg-type]  # ty: ignore[unused-ignore-comment]
         )  # ty: ignore[no-matching-overload]
 
-        from .middleware.minefarts import MineFartS_Middleware
-
         self.user_middleware: list[Middleware] = (
-            [] if middleware is None else list(middleware) + \
-            [MineFartS_Middleware]
+            [] if middleware is None else list(middleware)
         )
         
         self.middleware_stack: ASGIApp | None = None
         self.setup()
+
+    def run(self, *,
+        host: str = '0.0.0.0',
+        port: int = 8000,
+        workers: int = 1,
+        ssl_certfile: None|str = None,
+        ssl_keyfile: None|str = None,
+        log_level: None|str|int = None
+    ) -> None:
+        from .middleware.minefarts import MineFartS_Middleware
+        from uvicorn import run
+
+        self.add_middleware(MineFartS_Middleware)
+
+        run(
+            app = self,
+            host = host,
+            port = port,
+            workers = None if workers==1 else workers,
+            ssl_certfile = str(ssl_certfile),
+            ssl_keyfile = str(ssl_keyfile),
+            log_level = log_level
+        )
 
     def build_middleware_stack(self) -> ASGIApp:
         # Duplicate/override from Starlette to add AsyncExitStackMiddleware
