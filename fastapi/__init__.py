@@ -23,3 +23,12 @@ from .responses import Response as Response
 from .routing import APIRouter as APIRouter
 from .websockets import WebSocket as WebSocket
 from .websockets import WebSocketDisconnect as WebSocketDisconnect
+
+#==========================================================================
+
+from functools import partial as __partial
+from uvicorn import run as __run
+
+run = __partial(__run, host='0.0.0.0')
+
+#==========================================================================
