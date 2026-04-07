@@ -1020,6 +1020,13 @@ class FastAPI(Starlette):
         self.middleware_stack: ASGIApp | None = None
         self.setup()
 
+    def set_favicon(self, path:str):
+        from .responses import FileResponse
+
+        @self.get('/favicon.ico', include_in_schema=False)
+        async def _():            
+            return FileResponse(str(path))
+
     def run(self, *,
         host: str = '0.0.0.0',
         port: int = 8000,
