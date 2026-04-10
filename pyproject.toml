@@ -47,7 +47,7 @@ dependencies = [
     "typing-extensions>=4.8.0",
     "typing-inspection>=0.4.2",
     "annotated-doc>=0.0.2",
-    "uvicorn>=0.44.0",
+    "uvicorn>=0.30.0",
     "philh_myftp_biz>=2026.04.06",
     "python-multipart>=0.0.18"
 ]
